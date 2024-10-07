@@ -14,7 +14,8 @@ export const th = {
   [auth.forgotPassword.referenceCode]: 'กรุณารอรับรหัสผ่านของท่านทาง sms รหัสอ้างอิงคือ ',
   [auth.signIn]: 'เข้าสู่ระบบ',
   [auth.common.ok]: 'Ok',
-  [auth.common.success]: 'Action successfully',
+  [auth.common.success]: 'ดำเนินการสำเร็จ',
+  [auth.common.save]: 'บันทีก',
   [validations.requiredUserName]: 'กรุณากรอก บัญชีผู้ใช้งาน',
   [validations.requiredPassword]: 'กรุณากรอก รหัสผ่าน',
   [validations.lengthErrorPassword]: 'รหัสผ่านต้องมีความยาวอย่างน้อย 4 ตัวอักษร',
@@ -22,4 +23,8 @@ export const th = {
   [validations.forgotPassword.requiredMobile]: 'กรุณากรอก เบอร์โทรศัพท์',
   [validations.forgotPassword.formatEmail]: 'อีเมลไม่ถูกต้อง',
   [validations.forgotPassword.formatMobile]: 'เบอร์โทรศัพท์ไม่ถูกต้อง',
+  [validations.resetPassword.matchPassword]: 'รหัสผ่านไม่ตรงกัน',
+  [auth.resetPassword.changePassword]: 'เปลี่ยนรหัสผ่านใหม่',
+  [auth.resetPassword.newPassword]: 'รหัสผ่านใหม่',
+  [auth.resetPassword.confirmNewPassword]: 'ยืนยันรหัสผ่านใหม่',
 };

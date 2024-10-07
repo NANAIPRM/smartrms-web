@@ -1,3 +1,5 @@
+import { ChangeCircle } from '@mui/icons-material';
+
 export default {
   requiredUserName: 'validations.requiredUserName',
   requiredPassword: 'validations.requiredPassword',
@@ -7,5 +9,8 @@ export default {
     requiredMobile: 'validations.forgotPassword.requiredMobile',
     formatEmail: 'validations.forgotPassword.formatEmail',
     formatMobile: 'validations.forgotPassword.formatMobile',
+  },
+  resetPassword: {
+    matchPassword: 'validations.resetPassword.matchPassword',
   },
 };

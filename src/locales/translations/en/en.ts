@@ -18,6 +18,7 @@ export const en = {
     'Please wait to receive your password via sms. Your reference code is ',
   [auth.common.ok]: 'Ok',
   [auth.common.success]: 'Action successfully',
+  [auth.common.success]: 'save',
   [validations.requiredUserName]: 'Username is required.',
   [validations.requiredPassword]: 'Password is required.',
   [validations.lengthErrorPassword]: 'Password must be at least 4 characters long.',
@@ -25,4 +26,8 @@ export const en = {
   [validations.forgotPassword.requiredMobile]: 'Phone is required.',
   [validations.forgotPassword.formatEmail]: 'E-mail is not valid.',
   [validations.forgotPassword.formatMobile]: 'Phone is not valid.',
+  [validations.resetPassword.matchPassword]: 'Passwords do not match',
+  [auth.resetPassword.changePassword]: 'Change password',
+  [auth.resetPassword.newPassword]: 'New password',
+  [auth.resetPassword.confirmNewPassword]: 'Confirm new password',
 };

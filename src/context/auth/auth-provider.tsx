@@ -1,7 +1,7 @@
 import { FC, ReactNode, useCallback, useEffect, useReducer, useState } from 'react';
 import { AuthContext, initialState, State } from './auth-context';
 import PropTypes from 'prop-types';
-import { PostForgotPassword, postSignIn } from 'src/api/auth';
+import { PostForgotPassword, postSignIn, PutResetPassword } from 'src/api/auth';
 import { AxiosResponse } from 'axios';
 
 export interface PostSignIn {
@@ -14,10 +14,16 @@ export interface PostForgotPassword {
   email?: string;
 }
 
+export interface PutResetPassword {
+  new_password: string;
+  confirm_new_password: string;
+}
+
 enum ActionType {
   INITIALIZE = 'INITIALIZE',
   SIGN_IN = 'SIGN_IN',
   FORGOT_PASSWORD = 'FORGOT_PASSWORD',
+  RESET_PASSWORD = 'RESET_PASSWORD',
 }
 
 type InitializeAction = {
@@ -42,7 +48,11 @@ type ForgotPasswordAction = {
   };
 };
 
-type Action = InitializeAction | SignInAction | ForgotPasswordAction;
+type ResetPasswordAction = {
+  type: ActionType.RESET_PASSWORD;
+};
+
+type Action = InitializeAction | SignInAction | ForgotPasswordAction | ResetPasswordAction;
 
 type Handler = (state: State, action: any) => State;
 
@@ -71,8 +81,14 @@ const handlers: Record<ActionType, Handler> = {
 
     return {
       ...state,
-      isAuthenticated: true,
       confirmCode,
+    };
+  },
+
+  RESET_PASSWORD: (state: State): State => {
+
+    return {
+      ...state,
     };
   },
 };
@@ -140,12 +156,38 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
     [dispatch]
   );
 
+  const resetPassword = useCallback(
+    async (accessToken: string, data?: PutResetPassword): Promise<void> => {
+      try {
+        const headers = {};
+        const params = {
+          accessToken: accessToken
+        };
+        const response: AxiosResponse = await PutResetPassword(headers, params, data);
+
+        const { data: responseData } = response;
+        console.log(responseData);
+        if (responseData.resultCode === '20000') {
+          dispatch({
+            type: ActionType.RESET_PASSWORD,
+          })
+        } else {
+          throw new Error(responseData.resultDescription);
+        }
+      } catch (error) {
+        throw error;
+      }
+    },
+    [dispatch]
+  );
+
   return (
     <AuthContext.Provider
       value={{
         ...state,
         signIn,
         forgotPassword,
+        resetPassword
       }}
     >
       {children}

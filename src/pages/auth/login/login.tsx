@@ -3,7 +3,6 @@ import { usePageView } from 'src/hooks/use-page-view';
 import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
-import FormHelperText from '@mui/material/FormHelperText';
 
 import { paths } from 'src/paths';
 import { Box, Link, Stack, TextField } from '@mui/material';
@@ -87,7 +86,6 @@ const LoginPage = () => {
         onClose={() => setSnackbarOpen(false)}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
-        {/* Only a single React element (Alert) is passed to Snackbar */}
         <Alert
           onClose={() => setSnackbarOpen(false)}
           severity="error"

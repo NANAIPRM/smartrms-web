@@ -15,5 +15,11 @@ export default {
   common: {
     ok: 'auth.common.ok',
     success: 'auth.common.success',
+    save: 'auth.common.save',
+  },
+  resetPassword: {
+    changePassword: 'auth.resetPassword.changePassword',
+    newPassword: 'auth.resetPassword.newPassword',
+    confirmNewPassword: 'auth.resetPassword.confirmNewPassword',
   },
 };
