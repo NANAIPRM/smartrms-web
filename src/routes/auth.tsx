@@ -1,4 +1,4 @@
-import { ResetPasswordLayout } from '@layouts/auth/reset-password-layout';
+import { ResetPasswordLayout } from '@layouts/auth/reset-password';
 import { lazy } from 'react';
 import { Outlet, RouteObject } from 'react-router-dom';
 import { Layout as AuthLayout } from 'src/layouts/auth/layout';
