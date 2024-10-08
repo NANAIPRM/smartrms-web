@@ -86,7 +86,6 @@ const handlers: Record<ActionType, Handler> = {
   },
 
   RESET_PASSWORD: (state: State): State => {
-
     return {
       ...state,
     };
@@ -161,7 +160,7 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
       try {
         const headers = {};
         const params = {
-          accessToken: accessToken
+          accessToken: accessToken,
         };
         const response: AxiosResponse = await PutResetPassword(headers, params, data);
 
@@ -170,7 +169,7 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
         if (responseData.resultCode === '20000') {
           dispatch({
             type: ActionType.RESET_PASSWORD,
-          })
+          });
         } else {
           throw new Error(responseData.resultDescription);
         }
@@ -187,7 +186,7 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
         ...state,
         signIn,
         forgotPassword,
-        resetPassword
+        resetPassword,
       }}
     >
       {children}

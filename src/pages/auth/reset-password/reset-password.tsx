@@ -20,196 +20,197 @@ import { paths } from '@renderer/paths';
 import { PutResetPassword } from '@renderer/context/auth/auth-provider';
 
 interface Values {
-    password: string;
-    confirmPassword: string;
-    submit: null;
+  password: string;
+  confirmPassword: string;
+  submit: null;
 }
 
 const getInitialValues = (): Values => {
-    return {
-        password: '',
-        confirmPassword: '',
-        submit: null,
-    };
+  return {
+    password: '',
+    confirmPassword: '',
+    submit: null,
+  };
 };
 
 const validationSchema = () =>
-    Yup.object().shape({
-        password: Yup.string().min(4, 'lengthErrorPassword').required('requiredPassword'),
-        confirmPassword: Yup.string().test('passwords-match', 'passwordsMustMatch', function (value) {
-            return this.parent.password === value;
-        }),
-    });
+  Yup.object().shape({
+    password: Yup.string().min(4, 'lengthErrorPassword').required('requiredPassword'),
+    confirmPassword: Yup.string().test('passwords-match', 'passwordsMustMatch', function (value) {
+      return this.parent.password === value;
+    }),
+  });
 
 const ResetPassword = () => {
-    const router = useRouter();
-    const params = new URLSearchParams(window.location.search);
-    const isMounted = useMounted();
-    const accessToken = params.get('accessToken');
-    const { t } = useTranslation();
-    const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
-    const [snackbarMsg, setSnackbarMsg] = useState<string>('');
-    const [alertSeverity, setAlertSeverity] = useState<'success' | 'error'>('error');
-    const { resetPassword } = useAuth<AuthContextType>();
+  const router = useRouter();
+  const params = new URLSearchParams(window.location.search);
+  const isMounted = useMounted();
+  const accessToken = params.get('accessToken');
+  const { t } = useTranslation();
+  const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
+  const [snackbarMsg, setSnackbarMsg] = useState<string>('');
+  const [alertSeverity, setAlertSeverity] = useState<'success' | 'error'>('error');
+  const { resetPassword } = useAuth<AuthContextType>();
 
-    const formik = useFormik({
-        initialValues: getInitialValues(),
-        validationSchema,
-        onSubmit: async (values, helpers): Promise<void> => {
-            const data: PutResetPassword = {
-                new_password: values.password,
-                confirm_new_password: values.confirmPassword,
-            };
+  const formik = useFormik({
+    initialValues: getInitialValues(),
+    validationSchema,
+    onSubmit: async (values, helpers): Promise<void> => {
+      const data: PutResetPassword = {
+        new_password: values.password,
+        confirm_new_password: values.confirmPassword,
+      };
 
-            try {
-                if (accessToken) {
-                    await resetPassword(accessToken, data);
-                }
-                if (isMounted()) {
-                    setAlertSeverity('success');
-                    setSnackbarOpen(true);
-                    setSnackbarMsg(t(tokens.auth.common.success));
+      try {
+        if (accessToken) {
+          await resetPassword(accessToken, data);
+        }
+        if (isMounted()) {
+          setAlertSeverity('success');
+          setSnackbarOpen(true);
+          setSnackbarMsg(t(tokens.auth.common.success));
 
-                    setTimeout(() => {
-                        router.push(paths.auth.login);
-                    }, 1000);
-                }
+          setTimeout(() => {
+            router.push(paths.auth.login);
+          }, 1000);
+        }
+      } catch (err) {
+        if (isMounted()) {
+          setAlertSeverity('error');
+          setSnackbarOpen(true);
+          setSnackbarMsg(err.message);
+          helpers.setStatus({ success: false });
+          helpers.setSubmitting(false);
+        }
+      }
+    },
+  });
 
-            } catch (err) {
-                if (isMounted()) {
-                    setAlertSeverity('error');
-                    setSnackbarOpen(true);
-                    setSnackbarMsg(err.message);
-                    helpers.setStatus({ success: false });
-                    helpers.setSubmitting(false);
-                }
-            }
-        },
-    });
-
-    return (
-        <div>
-            <Snackbar
-                open={snackbarOpen}
-                autoHideDuration={3000}
-                onClose={() => setSnackbarOpen(false)}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+  return (
+    <div>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={() => setSnackbarOpen(false)}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert
+          onClose={() => setSnackbarOpen(false)}
+          severity={alertSeverity}
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          {snackbarMsg}
+        </Alert>
+      </Snackbar>
+      <Card elevation={14}>
+        <CardContent>
+          <Box
+            sx={{
+              margin: '18px',
+              alignItems: { xs: 'center', sm: 'end' },
+              display: 'flex',
+              justifyContent: 'center',
+              flex: '1 1 auto',
+              gap: '8px',
+              flexDirection: { xs: 'column', sm: 'row' },
+            }}
+          >
+            <Typography
+              variant="h5"
+              color="primary.main"
             >
-                <Alert
-                    onClose={() => setSnackbarOpen(false)}
-                    severity={alertSeverity}
-                    variant="filled"
-                    sx={{ width: '100%' }}
+              {t(tokens.auth.resetPassword.changePassword)}
+            </Typography>
+            <img
+              src="/assets/smartrms_logo.png"
+              style={{ height: '40px' }}
+            />
+          </Box>
+
+          <form
+            noValidate
+            onSubmit={formik.handleSubmit}
+          >
+            <Box sx={{ maxWidth: { sm: '100%', lg: '50%' }, mx: 'auto' }}>
+              <Stack spacing={3}>
+                <Typography
+                  color={
+                    formik.touched.password && formik.errors.password ? 'error' : 'text.primary'
+                  }
                 >
-                    {snackbarMsg}
-                </Alert>
-            </Snackbar>
-            <Card elevation={14}>
-                <CardContent>
-                    <Box
-                        sx={{
-                            margin: '18px',
-                            alignItems: { xs: 'center', sm: 'end' },
-                            display: 'flex',
-                            justifyContent: 'center',
-                            flex: '1 1 auto',
-                            gap: '8px',
-                            flexDirection: { xs: 'column', sm: 'row' },
-                        }}
-                    >
-                        <Typography
-                            variant="h5"
-                            color="primary.main"
-                        >
-                            {t(tokens.auth.resetPassword.changePassword)}
-                        </Typography>
-                        <img
-                            src="/assets/smartrms_logo.png"
-                            style={{ height: '40px' }}
-                        />
-                    </Box>
-
-                    <form
-                        noValidate
-                        onSubmit={formik.handleSubmit}
-                    >
-                        <Box sx={{ maxWidth: { sm: '100%', lg: '50%' }, mx: 'auto' }}>
-                            <Stack spacing={3}>
-                                <Typography
-                                    color={formik.touched.password && formik.errors.password ? 'error' : 'text.primary'}
-                                >
-                                    {t(tokens.auth.resetPassword.newPassword)}
-                                </Typography>
-                                <TextField
-                                    error={!!(formik.touched.password && formik.errors.password)}
-                                    helperText={
-                                        formik.touched.password && formik.errors.password === 'requiredPassword'
-                                            ? t(tokens.validations.requiredPassword)
-                                            : formik.touched.password && formik.errors.password === 'lengthErrorPassword'
-                                                ? t(tokens.validations.lengthErrorPassword)
-                                                : ''
-                                    }
-                                    fullWidth
-                                    name="password"
-                                    onBlur={formik.handleBlur}
-                                    onChange={formik.handleChange}
-                                    type="password"
-                                    value={formik.values.password}
-                                    sx={{
-                                        '& .MuiInputBase-input::placeholder': { color: 'text.secondary' },
-                                        '& .MuiFormHelperText-root': { marginLeft: '0' },
-                                    }}
-                                />
-                                <Typography
-                                    color={
-                                        formik.touched.confirmPassword && formik.errors.confirmPassword
-                                            ? 'error'
-                                            : 'text.primary'
-                                    }
-                                >
-                                    {t(tokens.auth.resetPassword.confirmNewPassword)}
-                                </Typography>
-                                <TextField
-                                    error={!!(formik.touched.confirmPassword && formik.errors.confirmPassword)}
-                                    helperText={
-                                        formik.touched.confirmPassword &&
-                                            formik.errors.confirmPassword === 'passwordsMustMatch'
-                                            ? t(tokens.validations.resetPassword.matchPassword)
-                                            : ''
-                                    }
-                                    fullWidth
-                                    name="confirmPassword"
-                                    onBlur={formik.handleBlur}
-                                    onChange={formik.handleChange}
-                                    type="password"
-                                    value={formik.values.confirmPassword}
-                                    sx={{
-                                        '& .MuiInputBase-input::placeholder': { color: 'text.secondary' },
-                                        '& .MuiFormHelperText-root': { marginLeft: '0' },
-                                    }}
-                                />
-                            </Stack>
-
-                            <Button
-                                disabled={formik.isSubmitting}
-                                fullWidth
-                                size="large"
-                                sx={{ mt: 2, color: 'white' }}
-                                type="submit"
-                                variant="contained"
-                            >
-                                {t(tokens.auth.common.save)}
-                            </Button>
-                        </Box>
-                    </form>
-                </CardContent>
-                <img
-                    src="/assets/bg_login.png"
-                    style={{ width: '100%', height: '100px', display: 'block' }}
+                  {t(tokens.auth.resetPassword.newPassword)}
+                </Typography>
+                <TextField
+                  error={!!(formik.touched.password && formik.errors.password)}
+                  helperText={
+                    formik.touched.password && formik.errors.password === 'requiredPassword'
+                      ? t(tokens.validations.requiredPassword)
+                      : formik.touched.password && formik.errors.password === 'lengthErrorPassword'
+                        ? t(tokens.validations.lengthErrorPassword)
+                        : ''
+                  }
+                  fullWidth
+                  name="password"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  type="password"
+                  value={formik.values.password}
+                  sx={{
+                    '& .MuiInputBase-input::placeholder': { color: 'text.secondary' },
+                    '& .MuiFormHelperText-root': { marginLeft: '0' },
+                  }}
                 />
-            </Card>
-        </div>
-    );
+                <Typography
+                  color={
+                    formik.touched.confirmPassword && formik.errors.confirmPassword
+                      ? 'error'
+                      : 'text.primary'
+                  }
+                >
+                  {t(tokens.auth.resetPassword.confirmNewPassword)}
+                </Typography>
+                <TextField
+                  error={!!(formik.touched.confirmPassword && formik.errors.confirmPassword)}
+                  helperText={
+                    formik.touched.confirmPassword &&
+                    formik.errors.confirmPassword === 'passwordsMustMatch'
+                      ? t(tokens.validations.resetPassword.matchPassword)
+                      : ''
+                  }
+                  fullWidth
+                  name="confirmPassword"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  type="password"
+                  value={formik.values.confirmPassword}
+                  sx={{
+                    '& .MuiInputBase-input::placeholder': { color: 'text.secondary' },
+                    '& .MuiFormHelperText-root': { marginLeft: '0' },
+                  }}
+                />
+              </Stack>
+
+              <Button
+                disabled={formik.isSubmitting}
+                fullWidth
+                size="large"
+                sx={{ mt: 2, color: 'white' }}
+                type="submit"
+                variant="contained"
+              >
+                {t(tokens.auth.common.save)}
+              </Button>
+            </Box>
+          </form>
+        </CardContent>
+        <img
+          src="/assets/bg_login.png"
+          style={{ width: '100%', height: '100px', display: 'block' }}
+        />
+      </Card>
+    </div>
+  );
 };
 
 export default ResetPassword;
