@@ -3,6 +3,7 @@ export default {
   userNameOrEmail: 'auth.userNameOrEmail',
   password: 'auth.password',
   signIn: 'auth.signIn',
+  copyRight: 'auth.copyRight',
   forgotPassword: {
     forgot: 'auth.forgotPassword.forgot',
     sms: 'auth.forgotPassword.sms',

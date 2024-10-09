@@ -9,6 +9,8 @@ import { paths } from 'src/paths';
 import Typography from '@mui/material/Typography';
 import { neutral } from 'src/theme/color';
 import { LanguageSwitch } from '../language-switch';
+import { useTranslation } from 'react-i18next';
+import { tokens } from '@renderer/locales/tokens';
 
 const TOP_NAV_HEIGHT = 80;
 const FOOTER_HEIGHT = 80;
@@ -31,6 +33,7 @@ interface LayoutProps {
 
 export const Layout: FC<LayoutProps> = (props) => {
   const { children } = props;
+  const { t } = useTranslation();
 
   return (
     <LayoutRoot>
@@ -107,7 +110,7 @@ export const Layout: FC<LayoutProps> = (props) => {
           sx={{ width: '100%', padding: '0 20px' }}
         >
           <Typography sx={{ color: neutral[100] }}>
-            © 2560 - 2567 Sourcecode Co., Ltd สงวนสิทธิ์ทุกประการ
+            {t(tokens.auth.copyRight)}
           </Typography>
           <LanguageSwitch />
         </Stack>

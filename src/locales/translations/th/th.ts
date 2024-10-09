@@ -13,6 +13,7 @@ export const th = {
   [auth.forgotPassword.newPassword]: 'รับรหัสผ่าน',
   [auth.forgotPassword.referenceCode]: 'กรุณารอรับรหัสผ่านของท่านทาง sms รหัสอ้างอิงคือ ',
   [auth.signIn]: 'เข้าสู่ระบบ',
+  [auth.copyRight]: '© 2560 - 2567 Sourcecode Co., Ltd สงวนสิทธิ์ทุกประการ',
   [auth.common.ok]: 'Ok',
   [auth.common.success]: 'ดำเนินการสำเร็จ',
   [auth.common.save]: 'บันทีก',

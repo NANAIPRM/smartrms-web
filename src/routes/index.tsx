@@ -1,6 +1,6 @@
-import { lazy } from 'react';
+import { Fragment, lazy, ReactElement, ReactNode } from 'react';
 import type { RouteObject } from 'react-router';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useRoutes } from 'react-router-dom';
 import { authRoutes } from './auth';
 import { AuthGuard } from '@guards/auth-guard';
 
@@ -10,34 +10,26 @@ const HomePage = lazy(() => import('@pages/home'));
 export const routes: RouteObject[] = [
   {
     path: '/',
-    element: <Outlet />,
-    children: [
-      {
-        index: true,
-        element: (
-          <AuthGuard>
-            <HomePage />
-          </AuthGuard>
-        ),
-      },
-      // Uncomment error routes
-      // {
-      //     path: '401',
-      //     element: <Error401Page />,
-      // },
-      // {
-      //     path: '404',
-      //     element: <Error404Page />,
-      // },
-      // {
-      //     path: '500',
-      //     element: <Error500Page />,
-      // },
-      // {
-      //     path: '*',
-      //     element: <Error404Page />,
-      // },
-    ],
+    element: (
+      <AuthGuard>
+        <HomePage />
+      </AuthGuard>
+    ),
   },
   ...authRoutes,
 ];
+
+const Routes = ({ wrapper }: { wrapper?: (props: { children: ReactNode }) => ReactElement }) => {
+  // useMixpanel()
+  const Wrapper = wrapper ?? Fragment;
+  return (
+    <Wrapper>
+      <BrowserRoutes />
+    </Wrapper>
+  );
+};
+export const BrowserRoutes = () => {
+  return useRoutes(routes);
+};
+
+export default Routes;

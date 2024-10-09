@@ -7,7 +7,6 @@ import Button from '@mui/material/Button';
 import { paths } from 'src/paths';
 import { Box, Link, Stack, TextField } from '@mui/material';
 
-import Alert from '@mui/material/Alert';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { warning } from 'src/theme/color';
@@ -17,7 +16,6 @@ import { useAuth } from 'src/hooks/use_auth';
 import { AuthContextType } from 'src/context/auth';
 import { PostSignIn } from 'src/context/auth/auth-provider';
 import { useState } from 'react';
-import Snackbar from '@mui/material/Snackbar';
 import { useTranslation } from 'react-i18next';
 import { tokens } from 'src/locales/tokens';
 
@@ -67,8 +65,6 @@ const LoginPage = () => {
         }
       } catch (err) {
         if (isMounted()) {
-          setSnackbarOpen(true);
-          setSnackbarMsg(err.message);
           helpers.setStatus({ success: false });
           helpers.setSubmitting(false);
         }
@@ -80,21 +76,6 @@ const LoginPage = () => {
 
   return (
     <div>
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={3000}
-        onClose={() => setSnackbarOpen(false)}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      >
-        <Alert
-          onClose={() => setSnackbarOpen(false)}
-          severity="error"
-          variant="filled"
-          sx={{ width: '100%' }}
-        >
-          {snackbarMsg}
-        </Alert>
-      </Snackbar>
       <Card elevation={14}>
         <CardContent>
           <form

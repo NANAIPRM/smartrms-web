@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -8,8 +7,6 @@ import * as Yup from 'yup';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
 import { useTranslation } from 'react-i18next';
 import { useMounted } from '@hooks/use-monted';
 import { useAuth } from '@hooks/use_auth';
@@ -47,9 +44,6 @@ const ResetPassword = () => {
   const isMounted = useMounted();
   const accessToken = params.get('accessToken');
   const { t } = useTranslation();
-  const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
-  const [snackbarMsg, setSnackbarMsg] = useState<string>('');
-  const [alertSeverity, setAlertSeverity] = useState<'success' | 'error'>('error');
   const { resetPassword } = useAuth<AuthContextType>();
 
   const formik = useFormik({
@@ -66,19 +60,12 @@ const ResetPassword = () => {
           await resetPassword(accessToken, data);
         }
         if (isMounted()) {
-          setAlertSeverity('success');
-          setSnackbarOpen(true);
-          setSnackbarMsg(t(tokens.auth.common.success));
-
           setTimeout(() => {
             router.push(paths.auth.login);
           }, 1000);
         }
       } catch (err) {
         if (isMounted()) {
-          setAlertSeverity('error');
-          setSnackbarOpen(true);
-          setSnackbarMsg(err.message);
           helpers.setStatus({ success: false });
           helpers.setSubmitting(false);
         }
@@ -88,21 +75,6 @@ const ResetPassword = () => {
 
   return (
     <div>
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={3000}
-        onClose={() => setSnackbarOpen(false)}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      >
-        <Alert
-          onClose={() => setSnackbarOpen(false)}
-          severity={alertSeverity}
-          variant="filled"
-          sx={{ width: '100%' }}
-        >
-          {snackbarMsg}
-        </Alert>
-      </Snackbar>
       <Card elevation={14}>
         <CardContent>
           <Box
@@ -174,7 +146,7 @@ const ResetPassword = () => {
                   error={!!(formik.touched.confirmPassword && formik.errors.confirmPassword)}
                   helperText={
                     formik.touched.confirmPassword &&
-                    formik.errors.confirmPassword === 'passwordsMustMatch'
+                      formik.errors.confirmPassword === 'passwordsMustMatch'
                       ? t(tokens.validations.resetPassword.matchPassword)
                       : ''
                   }

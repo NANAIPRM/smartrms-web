@@ -1,19 +1,19 @@
 import 'src/locales/i18n';
 import { FC } from 'react';
 import 'src/global.css';
-import { useRoutes } from 'react-router-dom';
-import { routes } from './routes';
+
+import Routes from './routes';
 import { AuthConsumer, AuthProvider } from './context/auth';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import { SettingsConsumer, SettingsProvider } from './context/settings';
 import { createTheme } from 'src/theme';
+import { SnackbarProvider } from './context/snakbar/snakbar-provider';
+import { SplashScreen } from '@components/splash-screen';
 
 export const App: FC = () => {
-  const element = useRoutes(routes);
-
   return (
-    <>
+    <SnackbarProvider>
       <AuthProvider>
         <AuthConsumer>
           {(authContext) => (
@@ -23,6 +23,8 @@ export const App: FC = () => {
                   if (!settings.isInitialized) {
                     // return null;
                   }
+
+                  const showSlashScreen = !authContext.isInitialized;
 
                   const theme = createTheme({
                     colorPreset: settings.colorPreset,
@@ -35,7 +37,11 @@ export const App: FC = () => {
                   return (
                     <ThemeProvider theme={theme}>
                       <CssBaseline />
-                      {element}
+                      {showSlashScreen ? (
+                        <SplashScreen />
+                      ) : (
+                        <Routes />
+                      )}
                     </ThemeProvider>
                   );
                 }}
@@ -44,6 +50,6 @@ export const App: FC = () => {
           )}
         </AuthConsumer>
       </AuthProvider>
-    </>
+    </SnackbarProvider>
   );
 };

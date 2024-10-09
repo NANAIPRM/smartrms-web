@@ -1,6 +1,5 @@
-/* eslint-disable import/no-named-as-default-member */
-import { initReactI18next } from 'react-i18next';
 import i18next from 'i18next';
+import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
 import { en } from './translations/en/en';
@@ -16,28 +15,19 @@ const DETECTION_OPTIONS = {
   caches: ['localStorage'],
 };
 
+const savedLanguage = localStorage.getItem('i18nextLng') || 'th';
+
 i18next
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     resources,
+    lng: savedLanguage,
     detection: DETECTION_OPTIONS,
-    fallbackLng: 'th',
+    fallbackLng: savedLanguage,
     interpolation: {
       escapeValue: false,
     },
   });
 
 export default i18next;
-
-// i18n.use(initReactI18next).init({
-//   resources: {
-//     th: { translation: th },
-//     en: { translation: en },
-//   },
-//   // lng: 'th',
-//   // fallbackLng: 'th',
-//   interpolation: {
-//     escapeValue: false,
-//   },
-// });

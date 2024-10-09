@@ -16,6 +16,7 @@ export const LanguageSwitch: FC = () => {
   const handleChange = useCallback(
     async (language: Language): Promise<void> => {
       await i18n.changeLanguage(language);
+      localStorage.setItem('i18nextLng', language);
     },
     [i18n]
   );

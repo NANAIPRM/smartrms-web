@@ -3,10 +3,7 @@ import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
-import FormHelperText from '@mui/material/FormHelperText';
 import { Box, ButtonGroup, Stack, TextField } from '@mui/material';
-import Alert from '@mui/material/Alert';
-import Snackbar from '@mui/material/Snackbar';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
@@ -83,8 +80,6 @@ const ForgotPasswordPage = () => {
         setModalOpen(true);
       } catch (err) {
         if (isMounted()) {
-          setSnackbarOpen(true);
-          setSnackbarMsg(err.message);
           helpers.setStatus({ success: false });
           helpers.setSubmitting(false);
         }
@@ -111,21 +106,6 @@ const ForgotPasswordPage = () => {
         confirmCode={confirmCode}
         onClose={handleCloseModal}
       />
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={3000}
-        onClose={() => setSnackbarOpen(false)}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      >
-        <Alert
-          onClose={() => setSnackbarOpen(false)}
-          severity="error"
-          variant="filled"
-          sx={{ width: '100%' }}
-        >
-          {snackbarMsg}
-        </Alert>
-      </Snackbar>
       <Card elevation={14}>
         <CardContent>
           <form

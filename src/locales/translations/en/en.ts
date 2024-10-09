@@ -14,11 +14,12 @@ export const en = {
     'Please enter your email address in the SmartRMS system to receive a password.',
   [auth.forgotPassword.newPassword]: 'Get New Password',
   [auth.signIn]: 'Sign In',
+  [auth.copyRight]: '© 2017 - 2024 Sourcecode Co., Ltd All rights reserved.',
   [auth.forgotPassword.referenceCode]:
     'Please wait to receive your password via sms. Your reference code is ',
   [auth.common.ok]: 'Ok',
   [auth.common.success]: 'Action successfully',
-  [auth.common.success]: 'save',
+  [auth.common.save]: 'save',
   [validations.requiredUserName]: 'Username is required.',
   [validations.requiredPassword]: 'Password is required.',
   [validations.lengthErrorPassword]: 'Password must be at least 4 characters long.',

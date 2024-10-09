@@ -1,3 +1,6 @@
+import { CollectionsBookmarkOutlined } from '@mui/icons-material';
+import CryptoJS from 'crypto-js';
+
 const userDataKey = 'userData';
 
 interface UserRole {
@@ -19,6 +22,7 @@ export const checkLogin = (): boolean => {
 
 export const getUserData = (): UserData | null => {
   const userData = localStorage.getItem(userDataKey);
+
   if (userData !== null && checkData(userData)) {
     return JSON.parse(userData) as UserData;
   } else {
@@ -26,7 +30,7 @@ export const getUserData = (): UserData | null => {
   }
 };
 
-const checkData = (data: any): boolean => {
+export const checkData = (data: any): boolean => {
   let haveData = false;
   const type = typeof data;
 
@@ -50,4 +54,10 @@ const checkData = (data: any): boolean => {
       break;
   }
   return haveData;
+};
+
+export const fnEncrypt = (val: string | object): string => {
+  const value = typeof val === 'string' ? val : JSON.stringify(val);
+  const encrypt = CryptoJS.AES.encrypt(value, 'rms-2017');
+  return encrypt.toString();
 };
