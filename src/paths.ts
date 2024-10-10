@@ -1,5 +1,6 @@
 export const paths = {
   index: '/',
+  home: '/home',
   auth: {
     login: '/login',
     auth: '/auth',

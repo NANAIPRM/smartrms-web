@@ -8,7 +8,7 @@ import { RouterLink } from 'src/components/router-link';
 import { paths } from 'src/paths';
 import Typography from '@mui/material/Typography';
 import { neutral } from 'src/theme/color';
-import { LanguageSwitch } from '../language-switch';
+import { LanguageSwitch } from '../../language-switch';
 import { useTranslation } from 'react-i18next';
 import { tokens } from '@renderer/locales/tokens';
 
@@ -27,11 +27,11 @@ const LayoutRoot = styled('div')(({ theme }) => ({
   height: '100%',
 }));
 
-interface LayoutProps {
+interface AuthLayoutProps {
   children: ReactNode;
 }
 
-export const Layout: FC<LayoutProps> = (props) => {
+export const AuthLayout: FC<AuthLayoutProps> = (props) => {
   const { children } = props;
   const { t } = useTranslation();
 
@@ -109,9 +109,7 @@ export const Layout: FC<LayoutProps> = (props) => {
           alignItems="center"
           sx={{ width: '100%', padding: '0 20px' }}
         >
-          <Typography sx={{ color: neutral[100] }}>
-            {t(tokens.auth.copyRight)}
-          </Typography>
+          <Typography sx={{ color: neutral[100] }}>{t(tokens.auth.copyRight)}</Typography>
           <LanguageSwitch />
         </Stack>
       </Box>
@@ -119,6 +117,6 @@ export const Layout: FC<LayoutProps> = (props) => {
   );
 };
 
-Layout.propTypes = {
+AuthLayout.propTypes = {
   children: PropTypes.node,
 };

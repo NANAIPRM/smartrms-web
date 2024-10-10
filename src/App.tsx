@@ -37,11 +37,7 @@ export const App: FC = () => {
                   return (
                     <ThemeProvider theme={theme}>
                       <CssBaseline />
-                      {showSlashScreen ? (
-                        <SplashScreen />
-                      ) : (
-                        <Routes />
-                      )}
+                      {showSlashScreen ? <SplashScreen /> : <Routes />}
                     </ThemeProvider>
                   );
                 }}

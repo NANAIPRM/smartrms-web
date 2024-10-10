@@ -60,8 +60,6 @@ const ForgotPasswordPage = () => {
   const router = useRouter();
   const { confirmCode, forgotPassword } = useAuth<AuthContextType>();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
-  const [snackbarMsg, setSnackbarMsg] = useState<string>('');
   const [formType, setFormType] = useState<'email' | 'mobile'>('mobile');
   const { t } = useTranslation();
 

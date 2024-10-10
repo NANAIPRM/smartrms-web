@@ -146,7 +146,7 @@ const ResetPassword = () => {
                   error={!!(formik.touched.confirmPassword && formik.errors.confirmPassword)}
                   helperText={
                     formik.touched.confirmPassword &&
-                      formik.errors.confirmPassword === 'passwordsMustMatch'
+                    formik.errors.confirmPassword === 'passwordsMustMatch'
                       ? t(tokens.validations.resetPassword.matchPassword)
                       : ''
                   }

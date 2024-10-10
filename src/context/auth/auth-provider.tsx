@@ -286,7 +286,7 @@ export const AuthProvider: FC<AuthProviderProps> = (props) => {
             });
 
             setTimeout(() => {
-              router.push(paths.index);
+              router.push(paths.home);
             }, 1500);
 
             let uuid = uuidv1();

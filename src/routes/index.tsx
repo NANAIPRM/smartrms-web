@@ -1,26 +1,54 @@
 import { Fragment, lazy, ReactElement, ReactNode } from 'react';
 import type { RouteObject } from 'react-router';
-import { Outlet, useRoutes } from 'react-router-dom';
+import { Outlet, useRoutes, Navigate } from 'react-router-dom';
 import { authRoutes } from './auth';
 import { AuthGuard } from '@guards/auth-guard';
+import { Layout } from '@layouts/home';
 
 // Lazy load HomePage
 const HomePage = lazy(() => import('@pages/home'));
+const ContactUsPage = lazy(() => import('@pages/contact/contact-us'));
 
 export const routes: RouteObject[] = [
   {
     path: '/',
     element: (
       <AuthGuard>
-        <HomePage />
+        <Outlet />
       </AuthGuard>
     ),
+    children: [
+      {
+        path: 'home',
+        element: (
+          <Layout>
+            <HomePage />
+          </Layout>
+        ),
+      },
+      {
+        index: true,
+        element: (
+          <Navigate
+            to="/home"
+            replace
+          />
+        ),
+      },
+      {
+        path: 'contact',
+        element: (
+          <Layout>
+            <ContactUsPage />
+          </Layout>
+        ),
+      },
+    ],
   },
   ...authRoutes,
 ];
 
 const Routes = ({ wrapper }: { wrapper?: (props: { children: ReactNode }) => ReactElement }) => {
-  // useMixpanel()
   const Wrapper = wrapper ?? Fragment;
   return (
     <Wrapper>
@@ -28,6 +56,7 @@ const Routes = ({ wrapper }: { wrapper?: (props: { children: ReactNode }) => Rea
     </Wrapper>
   );
 };
+
 export const BrowserRoutes = () => {
   return useRoutes(routes);
 };

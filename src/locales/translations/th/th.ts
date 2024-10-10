@@ -1,3 +1,4 @@
+import contact from '@renderer/locales/tokens/contact';
 import auth from 'src/locales/tokens/auth';
 import validations from 'src/locales/tokens/validations';
 
@@ -28,4 +29,8 @@ export const th = {
   [auth.resetPassword.changePassword]: 'เปลี่ยนรหัสผ่านใหม่',
   [auth.resetPassword.newPassword]: 'รหัสผ่านใหม่',
   [auth.resetPassword.confirmNewPassword]: 'ยืนยันรหัสผ่านใหม่',
+  [contact.contactUs]: 'ติดต่อเรา',
+  [contact.contact]: 'ช่องทางการติดต่อ ',
+  [contact.address]: 'ที่อยู่',
+  [contact.map]: 'แผนที่',
 };

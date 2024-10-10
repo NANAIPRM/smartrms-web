@@ -1,3 +1,4 @@
+import contact from '@renderer/locales/tokens/contact';
 import auth from 'src/locales/tokens/auth';
 import validations from 'src/locales/tokens/validations';
 
@@ -31,4 +32,8 @@ export const en = {
   [auth.resetPassword.changePassword]: 'Change password',
   [auth.resetPassword.newPassword]: 'New password',
   [auth.resetPassword.confirmNewPassword]: 'Confirm new password',
+  [contact.contactUs]: 'Contact us',
+  [contact.contact]: 'Contact us',
+  [contact.address]: 'Address',
+  [contact.map]: 'Map',
 };

@@ -1,7 +1,7 @@
-import { ResetPasswordLayout } from '@layouts/auth/reset-password';
+import { AuthLayout } from '@layouts/auth';
+import { ResetPasswordLayout } from '@layouts/auth';
 import { lazy } from 'react';
 import { RouteObject } from 'react-router-dom';
-import { Layout as AuthLayout } from 'src/layouts/auth/layout';
 
 // Lazy load auth pages
 const LoginPage = lazy(() => import('@pages/auth/login'));
