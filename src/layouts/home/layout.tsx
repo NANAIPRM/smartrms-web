@@ -51,7 +51,7 @@ const FooterLinks = () => (
       |
     </Typography>
     <Link
-      href="#"
+      href="/privacy-policy"
       sx={{
         color: neutral[100],
         cursor: 'pointer',

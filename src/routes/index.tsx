@@ -7,7 +7,8 @@ import { Layout } from '@layouts/home';
 
 // Lazy load HomePage
 const HomePage = lazy(() => import('@pages/home'));
-const ContactUsPage = lazy(() => import('@pages/contact/contact-us'));
+const ContactUsPage = lazy(() => import('@pages/contact'));
+const PrivacyPolicyPage = lazy(() => import('@pages/privacy-policy'));
 
 export const routes: RouteObject[] = [
   {
@@ -40,6 +41,14 @@ export const routes: RouteObject[] = [
         element: (
           <Layout>
             <ContactUsPage />
+          </Layout>
+        ),
+      },
+      {
+        path: 'privacy-policy',
+        element: (
+          <Layout>
+            <PrivacyPolicyPage />
           </Layout>
         ),
       },
