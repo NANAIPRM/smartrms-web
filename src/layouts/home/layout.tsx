@@ -69,7 +69,7 @@ const FooterLinks = () => (
       |
     </Typography>
     <Link
-      href="#"
+      href="/term-of-service"
       sx={{
         color: neutral[100],
         cursor: 'pointer',

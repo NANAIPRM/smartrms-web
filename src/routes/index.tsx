@@ -9,6 +9,8 @@ import { Layout } from '@layouts/home';
 const HomePage = lazy(() => import('@pages/home'));
 const ContactUsPage = lazy(() => import('@pages/contact'));
 const PrivacyPolicyPage = lazy(() => import('@pages/privacy-policy'));
+const TermOfServicePage = lazy(() => import('@pages/term-of-service'));
+const CancellationPoliciesPage = lazy(() => import('@pages/cancellation-policies'));
 
 export const routes: RouteObject[] = [
   {
@@ -49,6 +51,22 @@ export const routes: RouteObject[] = [
         element: (
           <Layout>
             <PrivacyPolicyPage />
+          </Layout>
+        ),
+      },
+      {
+        path: 'term-of-service',
+        element: (
+          <Layout>
+            <TermOfServicePage />
+          </Layout>
+        ),
+      },
+      {
+        path: 'cancellation-policies',
+        element: (
+          <Layout>
+            <CancellationPoliciesPage />
           </Layout>
         ),
       },

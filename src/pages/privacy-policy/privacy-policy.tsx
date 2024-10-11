@@ -4,7 +4,7 @@ import { useRouter } from '@hooks/user-router';
 import { Box, Card, CardContent, Paper, styled, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import { paths } from '@renderer/paths';
-import InfoCard from './components/info-card';
+import InfoCard from '../../components/info-card';
 
 const PrivacyPolicyPage = () => {
   const router = useRouter();
